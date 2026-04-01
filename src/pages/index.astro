@@ -1,4 +1,49 @@
 ---
+const baseURL =  'https://www.dnd5eapi.co'
+
+// Get race 
+const endpointRace = '/api/2014/races/'
+const raceURL = baseURL + endpointRace
+
+const responseRace = await fetch(raceURL)
+const DnDRaceData = await responseRace.json();
+const DnDRaces = DnDRaceData.results
+
+const DnDRace = Astro.url.searchParams.get("DnDRace");
+
+// Get chosen race
+const chosenRace = DnDRaces.find((raceItem) => raceItem.name === DnDRace);
+
+let chosenRaceData = "";
+
+if(chosenRace) {
+	const chosenRaceEndpoint = chosenRace.url
+	const chosenRaceURL = baseURL + chosenRaceEndpoint
+
+	const chosenRaceResponse = await fetch(chosenRaceURL)
+	chosenRaceData = await chosenRaceResponse.json();
+	console.log(chosenRaceData)
+}
+
+if(chosenRaceData.subraces && chosenRaceData.subraces.length > 0) {
+
+	const chosenRaceSubraces = chosenRaceData.subraces;
+	console.log("subraces", chosenRaceSubraces)
+
+}
+
+console.log(chosenRaceData.speed)
+
+
+
+
+// Get class
+
+// Get subclass
+
+// Get Hit Points
+
+
 
 ---
 
@@ -9,9 +54,72 @@
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>DnD Character Builder</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<h1>DnD Character Builder</h1>
+
+		<form action="/" method="GET">
+			<!-- Choose Race -->
+			<h2>Race</h2>
+
+			<label for="DnDRace">Choose a race:</label>
+			<select name="DnDRace" id="DnDRace">
+				{DnDRaces.map((DnDRace) => <option value={DnDRace.name}>{DnDRace.name}</option>)}
+			</select>
+
+
+			<!-- Choose Subrace is there is a subrace -->
+			{chosenRaceData?.subraces?.length > 0 && (
+			<div>
+				<h2>Subrace</h2>
+				<label for="subrace">Choose a subrace:</label>
+				<select name="subrace" id="subrace">
+				{chosenRaceData.subraces.map((subrace) => (<option value={subrace.name}>{subrace.name}</option>))}
+				</select>
+			</div>
+			)}
+
+
+			<!-- Choose Class -->
+
+			<!-- Choose Subclass -->
+
+			<!-- Hit Points -->
+			
+			
+
+			<button>Submit</button>
+
+
+		</form>
+
+
+		<section>
+			<h2>Ability Scores</h2>
+			<table>
+				<tr>
+					<th title="strength">STR</th>
+					<th title="dexterity">DEX</th>
+					<th title="constitution">CON</th>
+					<th title="intelthgence">INT</th>
+					<th title="wisdom">WIS</th>
+					<th title="charisma">CHA</th>
+				</tr>
+				<tr>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+				</tr>
+				
+	
+			</table>
+		</section>
+
+
+	<script src="./../main"></script>
 	</body>
 </html>
