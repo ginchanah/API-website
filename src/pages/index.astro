@@ -32,7 +32,7 @@ if(chosenRaceData.subraces && chosenRaceData.subraces.length > 0) {
 
 }
 
-console.log(chosenRaceData.speed)
+console.log(chosenRaceData.ability_bonuses)
 
 
 
@@ -60,8 +60,9 @@ console.log(chosenRaceData.speed)
 		<h1>DnD Character Builder</h1>
 
 		<form action="/" method="GET">
+			<h2>Build your character</h2>
 			<!-- Choose Race -->
-			<h2>Race</h2>
+			<h3>Race</h3>
 
 			<label for="DnDRace">Choose a race:</label>
 			<select name="DnDRace" id="DnDRace">
@@ -72,7 +73,7 @@ console.log(chosenRaceData.speed)
 			<!-- Choose Subrace is there is a subrace -->
 			{chosenRaceData?.subraces?.length > 0 && (
 			<div>
-				<h2>Subrace</h2>
+				<h3>Subrace</h3>
 				<label for="subrace">Choose a subrace:</label>
 				<select name="subrace" id="subrace">
 				{chosenRaceData.subraces.map((subrace) => (<option value={subrace.name}>{subrace.name}</option>))}
@@ -95,8 +96,9 @@ console.log(chosenRaceData.speed)
 		</form>
 
 
-		<section>
-			<h2>Ability Scores</h2>
+		<section class="character sheet">
+			<h2>Character sheet</h2>
+			<h3>Ability Scores</h3>
 			<table>
 				<tr>
 					<th title="strength">STR</th>
@@ -115,8 +117,26 @@ console.log(chosenRaceData.speed)
 					<td>0</td>
 				</tr>
 				
-	
+	<!-- This method gives you 6 predetermined scores (15, 14, 13, 12, 10, and 8). and chosenRaceData.ability_bonuses is added -->
 			</table>
+
+			<table>
+				<tr>
+					<th>Armor Class</th>
+					<td></td>
+				</tr>
+				<tr>
+					<th>Initiative</th>
+					<td></td>
+				</tr>
+				<tr>
+					<th>Speed</th>
+					<td>{chosenRaceData.speed}</td>
+				</tr>
+			</table>
+
+			<p>languages</p>
+
 		</section>
 
 
