@@ -1,0 +1,42 @@
+body {
+    margin: 0;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  .build-character {
+    grid-column: 1/2;
+  }
+
+  .character-sheet-container {
+    grid-column: 2/3;
+  }
+}
+
+/* header */
+header {
+    display: grid;
+    justify-content: center;
+}
+
+
+/* character builder */
+.build-character {
+    background: lightcoral;
+    .name-inputs {
+        display: grid;
+    }
+}
+
+
+/* character sheet */
+.character-sheet-container {
+    background: brown;
+    #character-sheet {
+      height: max-content;
+    }
+
+}
+

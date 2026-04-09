@@ -1,0 +1,60 @@
+---
+import Charactersheet from "./Charactersheet.astro"
+import Race from "../components/Race.astro"
+const baseURL =  'https://www.dnd5eapi.co'
+
+// Get race 
+const endpointRace = '/api/2014/races/'
+const raceURL = baseURL + endpointRace
+
+const responseRace = await fetch(raceURL)
+const DnDRaceData = await responseRace.json();
+const DnDRaces = DnDRaceData.results
+
+const DnDRace = Astro.url.searchParams.get("DnDRace");
+
+// Get chosen race
+const chosenRace = DnDRaces.find((raceItem) => raceItem.name === DnDRace);
+
+let chosenRaceData = "";
+
+if(chosenRace) {
+	const chosenRaceEndpoint = chosenRace.url
+	const chosenRaceURL = baseURL + chosenRaceEndpoint
+
+	const chosenRaceResponse = await fetch(chosenRaceURL)
+	chosenRaceData = await chosenRaceResponse.json();
+	console.log(chosenRaceData)
+}
+
+
+
+
+
+
+// get languages
+console.log(chosenRaceData.languages)
+console.log(chosenRaceData && chosenRaceData.subraces.map(subrace => subrace.name))
+
+---
+<form action="/" method="GET" class="build-character">
+    <h2>Build your character</h2>
+    <div class="name-inputs">
+        <label>
+            Player Name
+            <input type="text" id="player-name">
+        </label>
+        <label>
+            Character Name
+            <input type="text" id="character-name">
+        </label>
+    </div>
+    
+
+    <Race chosenRaceData={chosenRaceData} DnDRaces={DnDRaces} 
+      chosenRace={chosenRace} />
+
+
+</form>
+
+<Charactersheet chosenRaceData={chosenRaceData}/>

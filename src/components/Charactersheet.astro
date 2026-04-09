@@ -1,0 +1,259 @@
+---
+const { chosenRaceData } = Astro.props
+
+// if chosenRaceData exists and has ability bonuses it's an array otherwise if the chosenRaceData is null or unidefined return an empty array
+const abilityBonuses = chosenRaceData?.ability_bonuses ?? [];
+
+// get an array that copples the index to the bonus
+const bonusByIndex = new Map(
+  abilityBonuses.map(({ ability_score, bonus }) => [ability_score.index, bonus])
+);
+
+// if there is no bonus get a 0, but this function is used in the html to get the corresponding bonus to the index
+const getBonus = (index) => bonusByIndex.get(index) ?? 0;
+
+
+---
+<div class="character-sheet-container">
+
+    <button class="open-character-sheet">Open Character Sheet</button>
+    <section id="character-sheet">
+        <h2>Character sheet</h2>
+        <div>
+            <dl>
+                <dt>Character Name Label</dt>
+                <dd id="character-name-sheet"></dd>
+            </dl>
+
+            <dl>
+                <dt>Class Label</dt>
+                <dd>Class</dd>
+
+                <dt>Level</dt>
+                <dd>1</dd>
+
+                <dt>Player Name Label</dt>
+                <dd id="player-name-sheet"></dd>
+
+                <dt>Race Label</dt>
+                <dd>Race</dd>
+
+                <dt>Alignment Label</dt>
+                <dd>Alignment</dd>
+            </dl>
+        </div>
+
+        <div>
+            
+            <h3>Ability Scores</h3>
+            <button class="shuffle-button">Shuffle scores</button>
+            <dl>
+                <dt>Proficiency Bonus</dt>
+                <dd>2</dd>
+            </dl>
+            <table>
+                <tr>
+                    <th title="strength">STR</th>
+                    <th title="dexterity">DEX</th>
+                    <th title="constitution">CON</th>
+                    <th title="intelligence">INT</th>
+                    <th title="wisdom">WIS</th>
+                    <th title="charisma">CHA</th>
+                </tr>
+                <tr class="standard-array">
+                    <td>{getBonus("str")}</td>
+                    <td>{getBonus("dex")}</td>
+                    <td>{getBonus("con")}</td>
+                    <td>{getBonus("int")}</td>
+                    <td>{getBonus("wis")}</td>
+                    <td>{getBonus("cha")}</td>
+                </tr>
+                <tr>
+                    <th title="modifier" >mod</th>
+                    <th title="modifier" >mod</th>
+                    <th title="modifier" >mod</th>
+                    <th title="modifier" >mod</th>
+                    <th title="modifier" >mod</th>
+                    <th title="modifier" >mod</th>
+                </tr>
+                <tr class="modifiers">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+
+            
+        </div>
+
+        <table>
+            <tr>
+                <th>Armor Class</th>
+                <td class="armor-class"></td>
+            </tr>
+            <tr>
+                <th>Initiative Bonus</th>
+                <td class="initiative"></td>
+            </tr>
+            <tr>
+                <th>Speed</th>
+                <td>{chosenRaceData.speed}</td>
+            </tr>
+        </table>
+
+        <dl>
+            <dt>Languages</dt>
+            <dd>languages here</dd>
+        </dl>
+
+        <div>
+            <h3>Traits</h3>
+            <ul>
+                <li>link naar detailpagina?</li>
+            </ul>
+        </div>
+    </section>
+</div>
+
+
+<script>
+
+    // standard array
+    const standardArrayTD = document.querySelectorAll(".standard-array td");
+    let standardArray = [15, 14, 13, 12, 10, 8];
+
+    // shuffle the standard array
+    // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+    function shuffle(array) {
+    let currentIndex = array.length;
+
+    // while there are element to shuffle
+    while (currentIndex != 0) {
+        // pick random element
+        let randomIndex = Math.floor(Math.random() * currentIndex);
+        // remove 1 from current index
+        currentIndex--;
+
+        //swap with current element
+        [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+        ];
+    }
+    }
+
+    // get the first values of the cells upon load that are inserted by the server
+    const baseValues = Array.from(standardArrayTD, cell => Number(cell.textContent));
+
+    
+    // add random standard array numbers into the table
+    function insertStandardArray() {
+        shuffle(standardArray);
+        
+        standardArrayTD.forEach((cell, index) => {
+            const result = baseValues[index] + standardArray[index];
+            cell.textContent = result;
+        });
+    }
+    // insertStandardArray();
+
+
+    // make sure new Array is only added if there isn't a saved array in the localStorage
+    const saved = JSON.parse(localStorage.getItem("abilityScores"));
+    if (saved == null) {
+        insertStandardArray()
+    } else {
+        standardArrayTD.forEach((cell, index) => { cell.textContent = saved[index]; });;
+    }
+
+    // get the modifier of the ability scores
+    let modifiers = [];
+
+    function getModifiers() {
+        // scores after adding server value to standard array
+        // make an array from cells
+        const cellsArray = Array.from(standardArrayTD);
+        // turn array into numbers
+        const currentScores = cellsArray.map((cell) => {
+            const value = Number(cell.textContent);
+            return value;
+        });
+
+        modifiers = currentScores.map((abilityScore) => {
+            if (abilityScore >= 30) return 10;
+            if (abilityScore >= 28) return 9;
+            if (abilityScore >= 26) return 8;
+            if (abilityScore >= 24) return 7;
+            if (abilityScore >= 22) return 6;
+            if (abilityScore >= 20) return 5;
+            if (abilityScore >= 18) return 4;
+            if (abilityScore >= 16) return 3;
+            if (abilityScore >= 14) return 2;
+            if (abilityScore >= 12) return 1;
+            if (abilityScore >= 10) return 0;
+            if (abilityScore >= 8) return -1;
+            if (abilityScore >= 6) return -2;
+            if (abilityScore >= 4) return -3;
+            if (abilityScore >= 2) return -4;
+            if (abilityScore >= 1) return -5;
+        });
+    }
+    getModifiers();
+
+    //insert modifier values
+    const modifierTD = document.querySelectorAll(".modifiers td");
+
+    function insertModifiers() {
+    for (let i = 0; i < modifiers.length; i++) {
+        modifierTD.forEach((cell) => {
+        cell.textContent = modifiers[i++];
+        });
+    }
+    }
+    insertModifiers();
+
+    // calculate armor class
+    const armorClass = document.querySelector(".armor-class");
+
+    function insertAC() {
+    const dexModifier = modifiers[1];
+    armorClass.textContent = 10 + dexModifier;
+    }
+    insertAC();
+
+    // calculate initiative Bonus
+    const initiativeBonus = document.querySelector(".initiative");
+
+    function insertInitiative() {
+    const dexModifier = modifiers[1];
+    initiativeBonus.textContent = dexModifier;
+    }
+    insertInitiative();
+
+
+    function saveAbilityScores() {
+        const standardArrayRow = document.querySelector(".standard-array");
+        const abilityScores = Array.from(standardArrayRow.querySelectorAll("td")).map(td => Number(td.textContent));
+
+        localStorage.setItem("abilityScores", JSON.stringify(abilityScores)) 
+        JSON.parse(localStorage.getItem("abilityScores"))
+    }
+    saveAbilityScores()
+
+    function newAbilityScores() {
+    insertStandardArray();
+    getModifiers();
+    insertModifiers();
+    insertAC();
+    insertInitiative();
+    saveAbilityScores();
+    }
+
+    // shuffle again with button
+    const shuffleButton = document.querySelector(".shuffle-button");
+
+    shuffleButton.addEventListener("click", newAbilityScores);
+</script>

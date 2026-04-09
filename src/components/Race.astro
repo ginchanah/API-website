@@ -1,0 +1,32 @@
+---
+
+const { DnDRaces, chosenRace, chosenRaceData } = Astro.props;
+
+
+if(chosenRaceData.subraces && chosenRaceData.subraces.length > 0) {
+
+	const chosenRaceSubraces = chosenRaceData.subraces;
+	console.log("subraces", chosenRaceSubraces)
+
+}
+
+---
+<!-- Choose Race -->
+<h3>Race</h3>
+
+<label for="DnDRace">Choose a race:</label>
+<select name="DnDRace" id="DnDRace">
+  {DnDRaces.map((DnDRace) => <option value={DnDRace.name} selected={chosenRace && DnDRace.name === chosenRace.name}>{DnDRace.name}</option>)}
+</select>
+
+<!-- Choose Subrace if there is a subrace -->
+{chosenRaceData?.subraces?.length > 0 && (
+<div>
+    <h3>Subrace</h3>
+    <p id="subrace">{chosenRaceData.subraces.map(subrace => subrace.name)}</p>
+</div>
+)}
+
+<button>Submit</button>
+
+
