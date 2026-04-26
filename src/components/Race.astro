@@ -14,10 +14,13 @@ if(chosenRaceData.subraces && chosenRaceData.subraces.length > 0) {
 <!-- Choose Race -->
 <h3>Race</h3>
 
-<label for="DnDRace">Choose a race:</label>
-<select name="DnDRace" id="DnDRace">
-  {DnDRaces.map((DnDRace) => <option value={DnDRace.name} selected={chosenRace && DnDRace.name === chosenRace.name}>{DnDRace.name}</option>)}
-</select>
+<div class="select-container">
+  <label for="DnDRace">Choose a race:</label>
+  <select name="DnDRace" id="DnDRace">
+    <button></button>
+    {DnDRaces.map((DnDRace) => <option value={DnDRace.name} selected={chosenRace && DnDRace.name === chosenRace.name}><span>{DnDRace.name}</span></option>)}
+  </select>
+</div>
 
 <!-- Choose Subrace if there is a subrace -->
 {chosenRaceData?.subraces?.length > 0 && (

@@ -1,18 +1,24 @@
+:root {
+  --paper-color: #FAEED7;
+  --paper-color-2: #EFDDBB;
+  --bookmark: brown;
+  --contrast-text: white;
+}
+
+
+
+/* ***** */
+/* MARK: general styling
+/* ***** */
+
 body {
     margin: 0;
 }
 
 main {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-
-  .build-character {
-    grid-column: 1/2;
-  }
-
-  .character-sheet-container {
-    grid-column: 2/3;
-  }
+  justify-items: center;
+  gap: 4rem;
 }
 
 /* header */
@@ -21,22 +27,286 @@ header {
     justify-content: center;
 }
 
+/* ****** */
+/* MARK: Character Builder
+/* ***** */
 
-/* character builder */
-.build-character {
-    background: lightcoral;
-    .name-inputs {
-        display: grid;
-    }
+.selectable-content {
+  width: clamp(10rem, 50vw, 70rem);
 }
 
+/* character builder */
+.build-character .name-inputs {
+  display: grid;
+}
+
+/* ****** */
+/* MARK: Tabs
+/* ***** */
+
+.manual {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.3rem;
+}
+
+.bookmark-container {
+  width: clamp(2rem, 100%, 5rem);
+}
+
+[role="tab"] {
+  background-color: var(--bookmark);
+  color: var(--contrast-text);
+  border: none;
+  padding: 0;
+  position: relative;
+  width: clamp(2rem, 100%, 6rem);
+  height: 2.5rem;
+  box-sizing:content-box;
+
+
+  &::before {
+    content: '';
+    position: absolute;
+  }
+}
+
+[role="tab"][aria-selected="true"] {
+  padding-bottom: 1rem;
+}
+
+form[role="tabpanel"] {
+  box-sizing: border-box;
+  padding: 1rem;
+  border-radius: 0 1rem 1rem;
+  background: radial-gradient(var(--paper-color) 50%, var(--paper-color-2));
+  min-height: 10em;
+  width: 100%;
+}
+
+[role="tabpanel"].is-hidden {
+  display: none;
+}
+
+.triangle-container {
+  display: flex;
+  width: 100%;
+}
+
+.triangle {
+  width: 50%;
+  aspect-ratio: 1;
+  clip-path: polygon(0 100%,0 0,100% 100%);
+  background: var(--bookmark);
+}
+
+.triangle2 {
+  width: 50%;
+  aspect-ratio: 1;
+  clip-path: polygon(0 100%,100% 0,100% 100%);
+  background: var(--bookmark);
+}
+
+
+/* ****** */
+/* MARK: Character Sheet
+/* ***** */
 
 /* character sheet */
 .character-sheet-container {
-    background: brown;
+    background: var(--paper-color-2);
     #character-sheet {
-      height: max-content;
+      width: 70vw;
+      height: auto;
+      aspect-ratio: 1414 / 1000;
     }
 
 }
+
+
+/* ************* */
+/* MARK: custom select
+/* ************* */
+
+.select-container {
+  display: grid;
+
+  select {
+    --selected-race: '🤷';
+    display: grid;
+    justify-items: center;
+    border: none;
+    gap: 0;
+    width: max-content;
+
+    &::before {
+      content: '👑';
+      font-size: 2rem;
+    }
+
+    &::after {
+      content: var(--selected-race);
+      height: max-content;
+      font-size: 5rem;
+    }
+
+    &::picker-icon {
+      display: none;
+    }
+  }
+
+  ::picker(select) {
+    position-area: center center;
+    inset: 0;
+  }
+}
+
+select,
+::picker(select) {
+  appearance: base-select;
+}
+
+select::picker-icon {
+  display: none;
+}
+
+option {
+  
+  &::before {
+    width: max-content;
+
+    height: max-content;
+    font-size: 4rem;
+  }
+
+  &[value="Dragonborn"] {
+    &::before {
+      content: '🐲'
+    }
+  }
+
+  &[value="Dwarf"] {
+    &::before {
+      content: '🧙🏻‍♂️';
+    }
+  }
+
+  &[value="Elf"] {
+    &::before {
+      content: '🧚‍♂️'
+    }
+  }
+
+  &[value="Gnome"] {
+    &::before {
+      content: '🧝🏼'
+    }
+  }
+
+  &[value="Half-Elf"] {
+    &::before {
+      content: '🧚‍♂️🤏'
+    }
+  }
+
+  &[value="Half-Orc"] {
+    &::before {
+      content: '🧌🤏'
+    }
+  }
+
+  &[value="Halfling"] {
+    &::before {
+      content: '🧍‍♂️🤏'
+    }
+  }
+
+  &[value="Human"] {
+    &::before {
+      content: '🧍‍♂️'
+    }
+  }
+
+  &[value="Tiefling"] {
+    &::before {
+      content: '😈'
+    }
+  }
+}
+
+
+option {
+  position: relative;
+}
+
+option::checkmark {
+  content: '👑';
+  font-size: 2rem;
+  position: absolute;
+  top: -2rem;
+}
+
+option:not(:checked)::checkmark {
+  display: none;
+}
+
+option {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  column-gap: 0px;
+}
+
+/* dropdown container */
+::picker(select) {
+  background: transparent;
+  border: 0;
+  overflow: visible;
+
+  /* Position above the button, centered */
+  position-area: center center;
+  position-try: none;
+  inset: 0;
+
+  /* Keep picker visible during exit animation */
+  transition: display 0.25s allow-discrete;
+}
+
+
+
+select:open::picker(select) {
+  display: grid;
+  place-items: center;
+}
+
+
+
+option {
+
+    --radius: 13rem;
+    
+    
+    grid-area: 1/1;
+    width: 6rem;
+    aspect-ratio: 1;
+    place-items: center;
+    display: grid;
+  
+    
+    /*sibling count (hoeveel zijn er totaal)*/
+    translate:
+        calc(   sin(360deg/(sibling-count() - 1) * sibling-index() ) * var(--radius))
+        calc(   cos(360deg/(sibling-count() - 1) * sibling-index()  ) * var(--radius));
+}
+
+body:has(option[value="Dragonborn"]:has(::checkmark)) {
+  --selected-race: '🐲';
+}
+
+
+
+
+
+
+
 

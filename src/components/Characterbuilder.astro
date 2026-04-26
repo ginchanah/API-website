@@ -37,24 +37,49 @@ console.log(chosenRaceData.languages)
 console.log(chosenRaceData && chosenRaceData.subraces.map(subrace => subrace.name))
 
 ---
-<form action="/" method="GET" class="build-character">
-    <h2>Build your character</h2>
-    <div class="name-inputs">
-        <label>
-            Player Name
-            <input type="text" id="player-name">
-        </label>
-        <label>
-            Character Name
-            <input type="text" id="character-name">
-        </label>
+
+<div class="selectable-content">
+    <h2 id="tablist-1">Make your character</h2>
+
+    <div class="tabs">
+        <div role="tablist" aria-labelledby="tablist-1" class="manual">
+            <div class="bookmark-container">
+                <div class="triangle-container">
+                    <div class="triangle"></div>
+                    <div class="triangle2"></div>
+                </div>
+                <button id="tab-1" type="button" role="tab" aria-selected="true" aria-controls="tabpanel-1">
+                    General Info
+                </button>
+            </div>
+            <div class="bookmark-container">
+                <div class="triangle-container">
+                    <div class="triangle"></div>
+                    <div class="triangle2"></div>
+                </div>
+                <button id="tab-2" type="button" role="tab" aria-selected="false" aria-controls="tabpanel-2">
+                    Race
+                </button>
+            </div>
+        </div>
     </div>
     
-
-    <Race chosenRaceData={chosenRaceData} DnDRaces={DnDRaces} 
-      chosenRace={chosenRace} />
-
-
-</form>
+    <form action="/" method="GET" class="build-character is-hidden" id="tabpanel-1" role="tabpanel" aria-labelledby="tab-1">
+        <div class="name-inputs">
+            <label>
+                Player Name
+                <input type="text" id="player-name">
+            </label>
+            <label>
+                Character Name
+                <input type="text" id="character-name">
+            </label>
+        </div>
+    </form>
+    
+    <form action="/" method="GET" class="build-character" id="tabpanel-2" role="tabpanel" aria-labelledby="tab-2">
+        <Race chosenRaceData={chosenRaceData} DnDRaces={DnDRaces} chosenRace={chosenRace} />
+    </form>
+</div>
 
 <Charactersheet chosenRaceData={chosenRaceData}/>
