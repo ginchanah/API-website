@@ -1,0 +1,26 @@
+---
+const { langData } = Astro.props;
+---
+
+<div id="langPage">
+    {langData.desc && langData.desc.length > 0 && (
+        <div>
+            <h2>Description</h2>
+            <p>{langData.desc}</p>
+        </div>
+    )}
+    
+
+    <h2>Type</h2>
+    {langData.type}
+
+    <h2>Typical speakers</h2>
+    <ul>
+        
+        {langData.typical_speakers.map((speaker) => (
+                <li>
+                    {speaker}
+                </li>
+        ))}
+    </ul>
+</div>

@@ -1,5 +1,7 @@
 ---
-const { chosenRaceData } = Astro.props
+const { chosenRaceData, traits, proficiencies, subraceTraits, languages } = Astro.props
+
+
 
 // if chosenRaceData exists and has ability bonuses it's an array otherwise if the chosenRaceData is null or unidefined return an empty array
 const abilityBonuses = chosenRaceData?.ability_bonuses ?? [];
@@ -13,35 +15,106 @@ const bonusByIndex = new Map(
 const getBonus = (index) => bonusByIndex.get(index) ?? 0;
 
 
+
+
+
+
 ---
 <div class="character-sheet-container">
 
     <button class="open-character-sheet">Open Character Sheet</button>
     <section id="character-sheet">
         <h2>Character sheet</h2>
-        <div>
+        <div class="general-info">
             <dl>
-                <dt>Character Name Label</dt>
+                <dt>Character Name</dt>
                 <dd id="character-name-sheet"></dd>
             </dl>
 
             <dl>
-                <dt>Class Label</dt>
-                <dd>Class</dd>
+                <div>
+                    <dt>Class</dt>
+                    <dd>Class</dd>
+                </div>
 
-                <dt>Level</dt>
-                <dd>1</dd>
+                <div>
+                    <dt>Level</dt>
+                    <dd>1</dd>
+                </div>
 
-                <dt>Player Name Label</dt>
-                <dd id="player-name-sheet"></dd>
+                <div>
+                    <dt>Player Name</dt>
+                    <dd id="player-name-sheet"></dd>
+                </div>
 
-                <dt>Race Label</dt>
-                <dd>Race</dd>
+                <div>
+                    <dt>Race</dt>
+                    <dd>{chosenRaceData.name}</dd>
+                </div>
 
-                <dt>Alignment Label</dt>
-                <dd>Alignment</dd>
+                {chosenRaceData?.subraces?.length > 0 && (
+                <div>
+                    <dt>Subrace</dt>
+                    <dd>{chosenRaceData.subraces.map(subrace => subrace.name)}</dd>
+                </div>
+                )}
+
             </dl>
         </div>
+
+        <div>
+            <h3>Alignment</h3>
+            <p>{chosenRaceData.alignment}</p>
+        </div>
+
+        <div>
+            {traits.length > 0 && (
+                <>
+                <h3>Traits</h3>
+                <ul>
+                    {traits.map((trait) => (
+                    <li>
+                        <a href={`/traits/${trait.index}`}>
+                        {trait.name}
+                        </a>
+                    </li>
+                    ))}
+                    {subraceTraits.length > 0 && (
+                        <>
+                        
+                            {subraceTraits.map((trait) => (
+                            <li>
+                                <a href={`/traits/${trait.index}`}>
+                                {trait.name}
+                                </a>
+                            </li>
+                            ))}
+                        
+                        </>
+                    )}
+                </ul>
+                </>
+            )}
+        </div>
+
+        <div>
+            {proficiencies.length > 0 && (
+                <>
+                <h3>Proficiencies</h3>
+                <ul>
+                    {proficiencies.map((prof) => (
+                    <li>
+                        
+                        {prof.name}
+                        
+                    </li>
+                    ))}
+                </ul>
+                </>
+            )}
+        </div>
+
+            
 
         <div>
             
@@ -104,17 +177,23 @@ const getBonus = (index) => bonusByIndex.get(index) ?? 0;
             </tr>
         </table>
 
-        <dl>
-            <dt>Languages</dt>
-            <dd>languages here</dd>
-        </dl>
-
         <div>
-            <h3>Traits</h3>
-            <ul>
-                <li>link naar detailpagina?</li>
-            </ul>
+            {languages && languages.length > 0 && (
+                <>
+                    <h3>Languages</h3>
+                    <ul>
+                        {languages.map((lang) => (
+                            <li>
+                                <a href={`/languages/${lang.index}`}>
+                                    {lang.name}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </>
+            )}
         </div>
+
     </section>
 </div>
 

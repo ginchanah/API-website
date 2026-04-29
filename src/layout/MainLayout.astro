@@ -1,6 +1,8 @@
 ---
 import Header from "../components/Header.astro"
 
+const { headingOne } = Astro.props
+
 ---
 
 
@@ -9,13 +11,13 @@ import Header from "../components/Header.astro"
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
-		<link rel="stylesheet" href="src/styles.css">
+		<link rel="stylesheet" href="/src/styles.css">
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>DnD Character Builder</title>
 	</head>
 	<body>
-        <Header />
+        <Header headingOne={headingOne} />
 		
 		<main>
             <slot />
@@ -23,6 +25,5 @@ import Header from "../components/Header.astro"
 		</main>
 
 	</body>
-	<script src="./../api.js"></script>
-	<script src="./../main.js"></script>
+	
 </html>

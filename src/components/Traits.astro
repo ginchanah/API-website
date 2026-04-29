@@ -1,0 +1,39 @@
+---
+const { traitData } = Astro.props;
+
+// console.log(traitData)
+
+// if(traitData.trait_specific) {
+//     console.log(traitData.trait_specific)
+//     // console.log(traitData.trait_specific.subtrait_options.from.options)
+// }
+
+// console.log(traitData.proficiencies)
+---
+
+<div id="traitPage">
+    <h2>Description</h2>
+    <p>{traitData.desc}</p>
+
+
+    <h2>Which races have this trait</h2>
+    <ul>
+        {traitData.races.map((race) => <li>{race.name}</li>)}
+        {traitData.subraces.length > 0 && (
+            <>
+            
+                {traitData.subraces.map((subrace) => (
+                <li>
+                    {subrace.name}
+                </li>
+                ))}
+            
+            </>
+        )}
+    </ul>
+
+    
+    
+    
+</div>
+

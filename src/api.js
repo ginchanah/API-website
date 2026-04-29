@@ -5,13 +5,18 @@
 async function openCharacterSheet() {
   const characterSheet = document.getElementById("character-sheet");
 
-  // Open a Picture-in-Picture window.
+  // Open pip windo
   const pipWindow = await window.documentPictureInPicture.requestWindow({
     width: characterSheet.clientWidth,
     height: characterSheet.clientHeight,
   });
 
   const pipDocument = pipWindow.document;
+
+  // Copy stylesheet
+  document.querySelectorAll("link[rel='stylesheet'], style").forEach((styleElement) => {
+    pipDocument.head.appendChild(styleElement.cloneNode(true));
+  });
 
   const clone = characterSheet.cloneNode(true);
   pipDocument.body.appendChild(clone);

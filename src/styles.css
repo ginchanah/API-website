@@ -13,6 +13,7 @@
 
 body {
     margin: 0;
+    background: linear-gradient(#D6D3B7 20%, #72854C 50%, #103121);
 }
 
 main {
@@ -25,6 +26,10 @@ main {
 header {
     display: grid;
     justify-content: center;
+    background-color: #242424;
+    color: white;
+    height: 6rem;
+    align-items: center;
 }
 
 /* ****** */
@@ -73,6 +78,19 @@ header {
 
 [role="tab"][aria-selected="true"] {
   padding-bottom: 1rem;
+  background-color: darkred;
+
+  
+}
+
+.bookmark-container:has([role="tab"][aria-selected="true"]) {
+  .triangle {
+    background-color: darkred;
+  }
+
+  .triangle2 {
+    background-color: darkred;
+  }
 }
 
 form[role="tabpanel"] {
@@ -114,13 +132,55 @@ form[role="tabpanel"] {
 
 /* character sheet */
 .character-sheet-container {
-    background: var(--paper-color-2);
+    
     #character-sheet {
+      background: var(--paper-color-2);
       width: 70vw;
       height: auto;
-      aspect-ratio: 1414 / 1000;
+      aspect-ratio: 1000 / 1414;
+      padding: 2rem;
+
+      h2 {
+        margin: 0;
+      }
     }
 
+}
+
+.general-info {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+
+  
+
+  dl {
+    display: grid;
+    height: max-content;
+    background-color: #FAEED7;
+    padding: 0.5rem;
+  }
+
+  dl:first-of-type {
+    width: 50%;
+  }
+
+  dl:nth-of-type(2) {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 0.5rem;
+  }
+
+  dd {
+    background: white;
+    padding: 0.5rem;
+    margin: 0;
+    border-top: 0.1rem solid grey;
+  }
+
+  #character-name-sheet {
+    border-top: 0.1rem solid grey;
+  }
 }
 
 
@@ -128,11 +188,16 @@ form[role="tabpanel"] {
 /* MARK: custom select
 /* ************* */
 
+:root {
+  --selected-race: '🤷';
+}
+
 .select-container {
   display: grid;
+  place-items: center;
 
   select {
-    --selected-race: '🤷';
+    
     display: grid;
     justify-items: center;
     border: none;
@@ -144,11 +209,19 @@ form[role="tabpanel"] {
       font-size: 2rem;
     }
 
-    &::after {
-      content: var(--selected-race);
-      height: max-content;
-      font-size: 5rem;
+    selectedcontent {
+      display: grid;
+      align-items: center;
+      justify-items: center;
+
+      &::before {
+        content: var(--selected-race);
+        height: max-content;
+        font-size: 5rem;
+      }
     }
+
+    
 
     &::picker-icon {
       display: none;
@@ -234,10 +307,48 @@ option {
   }
 }
 
+body:has(option[value="Dragonborn"]:is(:checked)){
+    --selected-race: '🐲';
+}
+
+body:has(option[value="Dwarf"]:is(:checked)){
+    --selected-race: '🧙🏻‍♂️';
+}
+
+body:has(option[value="Elf"]:is(:checked)){
+    --selected-race: '🧚‍♂️';
+}
+
+body:has(option[value="Gnome"]:is(:checked)){
+    --selected-race: '🧝🏼';
+}
+
+body:has(option[value="Half-Elf"]:is(:checked)){
+    --selected-race: '🧚‍♂️🤏';
+}
+
+body:has(option[value="Half-Orc"]:is(:checked)){
+    --selected-race: '🧌🤏';
+}
+
+body:has(option[value="Halfling"]:is(:checked)){
+    --selected-race: '🧍‍♂️🤏';
+}
+
+body:has(option[value="Human"]:is(:checked)){
+    --selected-race: '🧍‍♂️';
+}
+
+
+body:has(option[value="Tiefling"]:is(:checked)){
+    --selected-race: '😈';
+}
+
 
 option {
   position: relative;
 }
+
 
 option::checkmark {
   content: '👑';
@@ -248,13 +359,6 @@ option::checkmark {
 
 option:not(:checked)::checkmark {
   display: none;
-}
-
-option {
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  column-gap: 0px;
 }
 
 /* dropdown container */
@@ -287,10 +391,9 @@ option {
     
     
     grid-area: 1/1;
-    width: 6rem;
-    aspect-ratio: 1;
     place-items: center;
     display: grid;
+    column-gap: 0px;
   
     
     /*sibling count (hoeveel zijn er totaal)*/
@@ -299,14 +402,22 @@ option {
         calc(   cos(360deg/(sibling-count() - 1) * sibling-index()  ) * var(--radius));
 }
 
-body:has(option[value="Dragonborn"]:has(::checkmark)) {
-  --selected-race: '🐲';
+
+
+
+
+
+/* ********* */
+/* MARK: Traits Pagina
+/* ********* */
+
+#traitPage, #langPage {
+  min-height: 100vh;
+
+
+
+
 }
-
-
-
-
-
 
 
 

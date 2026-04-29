@@ -1,0 +1,19 @@
+---
+
+import MainLayout from "../../layout/MainLayout.astro"
+import Traits from "../../components/Traits.astro"
+
+
+const { trait } = Astro.params;
+
+const baseURL = 'https://www.dnd5eapi.co';
+const endpointTrait = '/api/2014/traits/';
+
+const traitResponse = await fetch(`${baseURL}${endpointTrait}${trait}`);
+const traitData = await traitResponse.json();
+
+---
+
+<MainLayout headingOne={traitData.name}>
+	<Traits traitData={traitData} />
+</MainLayout>

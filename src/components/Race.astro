@@ -6,7 +6,7 @@ const { DnDRaces, chosenRace, chosenRaceData } = Astro.props;
 if(chosenRaceData.subraces && chosenRaceData.subraces.length > 0) {
 
 	const chosenRaceSubraces = chosenRaceData.subraces;
-	console.log("subraces", chosenRaceSubraces)
+	// console.log("subraces", chosenRaceSubraces)
 
 }
 
@@ -17,7 +17,11 @@ if(chosenRaceData.subraces && chosenRaceData.subraces.length > 0) {
 <div class="select-container">
   <label for="DnDRace">Choose a race:</label>
   <select name="DnDRace" id="DnDRace">
-    <button></button>
+    <button>
+      <div>
+        <selectedcontent> </selectedcontent>
+      </div>
+    </button>
     {DnDRaces.map((DnDRace) => <option value={DnDRace.name} selected={chosenRace && DnDRace.name === chosenRace.name}><span>{DnDRace.name}</span></option>)}
   </select>
 </div>

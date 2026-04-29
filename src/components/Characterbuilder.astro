@@ -11,12 +11,14 @@ const responseRace = await fetch(raceURL)
 const DnDRaceData = await responseRace.json();
 const DnDRaces = DnDRaceData.results
 
+
 const DnDRace = Astro.url.searchParams.get("DnDRace");
 
 // Get chosen race
 const chosenRace = DnDRaces.find((raceItem) => raceItem.name === DnDRace);
 
 let chosenRaceData = "";
+let chosenRaceTraits = [];
 
 if(chosenRace) {
 	const chosenRaceEndpoint = chosenRace.url
@@ -24,17 +26,61 @@ if(chosenRace) {
 
 	const chosenRaceResponse = await fetch(chosenRaceURL)
 	chosenRaceData = await chosenRaceResponse.json();
+    chosenRaceTraits = chosenRaceData.traits || [];
 	console.log(chosenRaceData)
+    console.log(chosenRaceTraits)
 }
 
 
+const chosenRaceIndex = chosenRace.index
+
+// Get traits
+const endpointTraits = '/api/2014/traits/'
+const traitURL = baseURL + endpointTraits
+
+const responseTraits = await fetch(traitURL)
+const traitData = await responseTraits.json();
+const traits = traitData.results
+
+// console.log(traits)
+const endpointProficiencies = `/api/2014/races/${chosenRaceIndex}/proficiencies`
+
+const profURL = baseURL + endpointProficiencies
+
+const responseProf = await fetch(profURL)
+const profData = await responseProf.json();
+const proficiencies = profData.results
+
+// console.log("proficiencies", proficiencies)
 
 
 
 
-// get languages
-console.log(chosenRaceData.languages)
-console.log(chosenRaceData && chosenRaceData.subraces.map(subrace => subrace.name))
+// subrace data
+let subraceTraits = "";
+if (chosenRaceData.subraces.length > 0) {
+    const subraceEndpoint = chosenRaceData.subraces[0].url
+
+    console.log("subraces", subraceEndpoint)
+    const subraceURL = baseURL + subraceEndpoint
+    console.log(subraceURL)
+    const subraceResponse = await fetch(subraceURL)
+    const subraceData = await subraceResponse.json();
+    
+
+    console.log(subraceData)
+
+    subraceTraits = subraceData.racial_traits
+
+}
+
+
+// languages 
+
+const languages = chosenRaceData.languages
+console.log(languages)
+
+
 
 ---
 
@@ -78,8 +124,22 @@ console.log(chosenRaceData && chosenRaceData.subraces.map(subrace => subrace.nam
     </form>
     
     <form action="/" method="GET" class="build-character" id="tabpanel-2" role="tabpanel" aria-labelledby="tab-2">
-        <Race chosenRaceData={chosenRaceData} DnDRaces={DnDRaces} chosenRace={chosenRace} />
+        <Race raceRace={chosenRace} chosenRaceData={chosenRaceData} DnDRaces={DnDRaces} traits={chosenRaceTraits} />
     </form>
+
+
+    <div>
+                <ul>
+                    {traits.map((trait) => (
+                    <li>
+                        <a href={`/traits/${trait.index}`}>
+                        {trait.name}
+                        </a>
+                    </li>
+                    ))}
+                </ul>
+            </div>
+
 </div>
 
-<Charactersheet chosenRaceData={chosenRaceData}/>
+<Charactersheet chosenRaceData={chosenRaceData} traits={chosenRaceTraits} proficiencies={proficiencies} subraceTraits={subraceTraits} languages={languages}/>

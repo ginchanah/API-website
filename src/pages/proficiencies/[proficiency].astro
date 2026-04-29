@@ -1,0 +1,20 @@
+---
+
+import MainLayout from "../../layout/MainLayout.astro"
+import Proficiencies from "../../components/Proficiencies.astro"
+
+
+const { proficiency } = Astro.params;
+
+const baseURL = 'https://www.dnd5eapi.co';
+const endpointProf = '/api/2014/proficiencies/';
+
+const profResponse = await fetch(`${baseURL}${endpointProf}${proficiency}`);
+const profData = await profResponse.json();
+// console.log(profData)
+
+---
+
+<MainLayout headingOne={profData.name}>
+	<Proficiencies profData={profData} />
+</MainLayout>

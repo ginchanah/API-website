@@ -1,0 +1,17 @@
+---
+import MainLayout from "../../layout/MainLayout.astro"
+import Languages from "../../components/Languages.astro"
+
+const { lang } = Astro.params;
+
+const baseURL = 'https://www.dnd5eapi.co';
+const endpointLang = '/api/2014/languages/'; // Changed from proficiencies
+
+const langResponse = await fetch(`${baseURL}${endpointLang}${lang}`);
+const langData = await langResponse.json();
+console.log("languages", langData)
+---
+
+<MainLayout headingOne={langData.name}>
+	<Languages langData={langData} />
+</MainLayout>
