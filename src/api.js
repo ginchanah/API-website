@@ -51,6 +51,8 @@ characterName.value = localStorage.getItem("characterName")
 characterNameSheet.textContent = localStorage.getItem("characterName")
 
 
+
+
 const playerName = document.getElementById("player-name")
 const playerNameSheet = document.getElementById("player-name-sheet")
 playerName.addEventListener("blur", savePlayerName)
@@ -66,4 +68,5 @@ playerName.value = localStorage.getItem("playerName")
 playerNameSheet.textContent = localStorage.getItem("playerName")
 
 
-// dit werkt, maar ga liever met objecten werken
+// dit werkt, maar ga liever met objecten werken (?)
+

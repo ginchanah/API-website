@@ -17,8 +17,9 @@ const DnDRace = Astro.url.searchParams.get("DnDRace");
 // Get chosen race
 const chosenRace = DnDRaces.find((raceItem) => raceItem.name === DnDRace);
 
-let chosenRaceData = "";
+let chosenRaceData = {}; 
 let chosenRaceTraits = [];
+let chosenRaceIndex = "";
 
 if(chosenRace) {
 	const chosenRaceEndpoint = chosenRace.url
@@ -27,29 +28,34 @@ if(chosenRace) {
 	const chosenRaceResponse = await fetch(chosenRaceURL)
 	chosenRaceData = await chosenRaceResponse.json();
     chosenRaceTraits = chosenRaceData.traits || [];
+    chosenRaceIndex = chosenRace.index;
 	console.log(chosenRaceData)
     console.log(chosenRaceTraits)
 }
 
 
-const chosenRaceIndex = chosenRace.index
-
 // Get traits
 const endpointTraits = '/api/2014/traits/'
+
 const traitURL = baseURL + endpointTraits
 
 const responseTraits = await fetch(traitURL)
 const traitData = await responseTraits.json();
 const traits = traitData.results
 
+
+
 // console.log(traits)
-const endpointProficiencies = `/api/2014/races/${chosenRaceIndex}/proficiencies`
+const endpointProficiencies = chosenRaceIndex ? `/api/2014/races/${chosenRaceIndex}/proficiencies` : null;
 
-const profURL = baseURL + endpointProficiencies
+let proficiencies = [];
 
-const responseProf = await fetch(profURL)
-const profData = await responseProf.json();
-const proficiencies = profData.results
+if(endpointProficiencies) {
+        const profURL = baseURL + endpointProficiencies
+        const responseProf = await fetch(profURL)
+        const profData = await responseProf.json();
+        proficiencies = profData.results || [];
+}
 
 // console.log("proficiencies", proficiencies)
 
@@ -57,8 +63,8 @@ const proficiencies = profData.results
 
 
 // subrace data
-let subraceTraits = "";
-if (chosenRaceData.subraces.length > 0) {
+let subraceTraits = [];
+if (chosenRaceData?.subraces?.length > 0) {
     const subraceEndpoint = chosenRaceData.subraces[0].url
 
     console.log("subraces", subraceEndpoint)
@@ -77,7 +83,7 @@ if (chosenRaceData.subraces.length > 0) {
 
 // languages 
 
-const languages = chosenRaceData.languages
+const languages = chosenRaceData.languages || [];
 console.log(languages)
 
 
@@ -143,3 +149,29 @@ console.log(languages)
 </div>
 
 <Charactersheet chosenRaceData={chosenRaceData} traits={chosenRaceTraits} proficiencies={proficiencies} subraceTraits={subraceTraits} languages={languages}/>
+
+
+<script>
+    const raceSelect = document.getElementById("DnDRace");
+    const form = raceSelect.closest("form"); 
+
+    // Set the saved race on page load
+    const savedRace = localStorage.getItem("selectedRace") || "";
+    raceSelect.value = savedRace;
+
+    // Submit form when race is selected
+    raceSelect.addEventListener("change", function() {
+        localStorage.setItem("selectedRace", raceSelect.value);
+        form.submit();
+    });
+
+    // if the selected Race is not the same as the url, reload page with URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlRace = urlParams.get("DnDRace");
+
+    if(savedRace && savedRace !== urlRace) {
+        form.submit();
+    }
+
+  
+</script>
