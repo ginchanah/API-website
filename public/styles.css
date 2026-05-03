@@ -39,6 +39,8 @@ body {
     margin: 0;
     background: var(--background-color);
     width: 100vw;
+    
+
 }
 
 main {
@@ -60,13 +62,39 @@ header {
     background-position: center;
     margin: 1rem 4rem;
 
+
     @media (width <= 860px) {
+
       background-image: none;
-      background: black;
-      border: 0.2rem solid white;
-      height: min-content;
+
+      h1 {
+        background: black;
+        border: 0.2rem solid white;
+        height: min-content;
+        padding: 2rem;
+
+
+         
+      }
+      
       
     }
+
+    @media (width <= 525px) {
+      margin-bottom: 5rem;
+    }
+}
+
+@media (width >= 2091px) {
+  body {
+    display: grid;
+    justify-items: center;
+  }
+
+  main, header {
+    min-width: 2091px;
+    max-width: 2091px;
+  }
 }
 
 
