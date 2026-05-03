@@ -91,8 +91,6 @@ console.log(languages)
 ---
 
 <div class="selectable-content">
-    <h2 id="tablist-1">Make your character</h2>
-
     <div class="tabs">
         <div role="tablist" aria-labelledby="tablist-1" class="manual">
             <div class="bookmark-container">
@@ -115,9 +113,13 @@ console.log(languages)
             </div>
         </div>
     </div>
+
     
-    <form action="/" method="GET" class="build-character is-hidden" id="tabpanel-1" role="tabpanel" aria-labelledby="tab-1">
-        <div class="name-inputs">
+    <form action="/" method="GET" class="build-character" id="tabpanel-1" role="tabpanel" aria-labelledby="tab-1">
+        <div class="page1">
+            <h2>General Info</h2>
+        </div>
+        <div class="name-inputs page2">
             <label>
                 Player Name
                 <input type="text" id="player-name">
@@ -129,12 +131,15 @@ console.log(languages)
         </div>
     </form>
     
-    <form action="/" method="GET" class="build-character" id="tabpanel-2" role="tabpanel" aria-labelledby="tab-2">
+    <form action="/" method="GET" class="build-character is-hidden" id="tabpanel-2" role="tabpanel" aria-labelledby="tab-2">
+        <div class="page1">
+            <h2>Race</h2>
+        </div>
         <Race raceRace={chosenRace} chosenRaceData={chosenRaceData} DnDRaces={DnDRaces} traits={chosenRaceTraits} />
     </form>
 
 
-    <div>
+            <!-- <div>
                 <ul>
                     {traits.map((trait) => (
                     <li>
@@ -144,7 +149,7 @@ console.log(languages)
                     </li>
                     ))}
                 </ul>
-            </div>
+            </div> -->
 
 </div>
 

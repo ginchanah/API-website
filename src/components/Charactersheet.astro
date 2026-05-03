@@ -24,175 +24,191 @@ const getBonus = (index) => bonusByIndex.get(index) ?? 0;
 
     <button class="open-character-sheet">Open Character Sheet</button>
     <section id="character-sheet">
-        <h2>Character sheet</h2>
-        <div class="general-info">
-            <dl>
-                <dt>Character Name</dt>
-                <dd id="character-name-sheet"></dd>
-            </dl>
 
-            <dl>
-                <div>
-                    <dt>Class</dt>
-                    <dd>Class</dd>
-                </div>
-
-                <div>
-                    <dt>Level</dt>
-                    <dd>1</dd>
-                </div>
-
-                <div>
-                    <dt>Player Name</dt>
-                    <dd id="player-name-sheet"></dd>
-                </div>
-
-                <div>
-                    <dt>Race</dt>
-                    <dd>{chosenRaceData.name}</dd>
-                </div>
-
-                {chosenRaceData?.subraces?.length > 0 && (
-                <div>
-                    <dt>Subrace</dt>
-                    <dd>{chosenRaceData.subraces.map(subrace => subrace.name)}</dd>
-                </div>
-                )}
-
-            </dl>
-        </div>
-
-        <div>
-            <h3>Alignment</h3>
-            <p>{chosenRaceData.alignment}</p>
-        </div>
-
-        <div>
-            {traits.length > 0 && (
-                <>
-                <h3>Traits</h3>
-                <ul>
-                    {traits.map((trait) => (
-                    <li>
-                        <a href={`/traits/${trait.index}`}>
-                        {trait.name}
-                        </a>
-                    </li>
-                    ))}
-                    {subraceTraits.length > 0 && (
-                        <>
-                        
-                            {subraceTraits.map((trait) => (
-                            <li>
-                                <a href={`/traits/${trait.index}`}>
-                                {trait.name}
-                                </a>
-                            </li>
-                            ))}
-                        
-                        </>
+            <h2> <span>Character sheet</span></h2>
+            <div class="general-info">
+                <dl>
+                    <div class="character-name-container">
+                        <dt>Character Name:</dt>
+                        <dd id="character-name-sheet"></dd>
+                    </div>
+                    
+    
+                    <div>
+                        <dt>Level:</dt>
+                        <dd>1</dd>
+                    </div>
+    
+                    <div>
+                        <dt>Player Name:</dt>
+                        <dd id="player-name-sheet"></dd>
+                    </div>
+    
+                    <div>
+                        <dt>Race:</dt>
+                        <dd>{chosenRaceData.name}</dd>
+                    </div>
+    
+                    {chosenRaceData?.subraces?.length > 0 && (
+                    <div>
+                        <dt>Subrace:</dt>
+                        <dd>{chosenRaceData.subraces.map(subrace => subrace.name)}</dd>
+                    </div>
                     )}
-                </ul>
-                </>
-            )}
-        </div>
+    
+                </dl>
+            </div>
 
-        <div>
-            {proficiencies.length > 0 && (
-                <>
-                <h3>Proficiencies</h3>
-                <ul>
-                    {proficiencies.map((prof) => (
-                    <li>
-                        
-                        {prof.name}
-                        
-                    </li>
-                    ))}
-                </ul>
-                </>
-            )}
-        </div>
-
+            <div class="ability-score-container">
+                
+                <h3>Ability Scores</h3>
+                <button class="shuffle-button">Shuffle scores</button>
+                
+                <table class="ability-score-table">
+                    <tr>
+                        <th>Strength</th>
+                        <th>Dexterity</th>
+                        <th>Constitution</th>
+                        <th>Intelligence</th>
+                        <th>Wisdom</th>
+                        <th>Charisma</th>
+                    </tr>
+                    <tr class="standard-array">
+                        <td>{getBonus("str")}</td>
+                        <td>{getBonus("dex")}</td>
+                        <td>{getBonus("con")}</td>
+                        <td>{getBonus("int")}</td>
+                        <td>{getBonus("wis")}</td>
+                        <td>{getBonus("cha")}</td>
+                    </tr>
+                    
+                    <tr class="modifiers">
+                        <td> <span></span></td>
+                        <td><span></span></td>
+                        <td><span></span></td>
+                        <td><span></span></td>
+                        <td><span></span></td>
+                        <td><span></span></td>
+                    </tr>
+                </table>
+    
+                
+            </div>
+    
             
+            <div class="traits-prof-container">
 
-        <div>
+                <div class="square">
+                    <div>
+                        <div>
+
+                            {traits.length > 0 && (
+                                <>
+                                <h3>Traits</h3>
+                                <ul>
+                                    {traits.map((trait) => (
+                                    <li>
+                                        <a href={`/traits/${trait.index}`}>
+                                        {trait.name}
+                                        </a>
+                                    </li>
+                                    ))}
+                                    {subraceTraits.length > 0 && (
+                                        <>
+                                        
+                                            {subraceTraits.map((trait) => (
+                                            <li>
+                                                <a href={`/traits/${trait.index}`}>
+                                                {trait.name}
+                                                </a>
+                                            </li>
+                                            ))}
+                                        
+                                        </>
+                                    )}
+                                </ul>
+                                </>
+                            )}
+                        </div>
+
+                    </div>
+                </div>
+        
+                <div class="square">
+                    <div>
+                        <div>
+                            {proficiencies.length > 0 && (
+                                <>
+                                <h3>Proficiencies</h3>
+                                <ul>
+                                    {proficiencies.map((prof) => (
+                                    <li>
+                                        
+                                        {prof.name}
+                                        
+                                    </li>
+                                    ))}
+                                </ul>
+                                </>
+                            )}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+    
+                
+    
             
-            <h3>Ability Scores</h3>
-            <button class="shuffle-button">Shuffle scores</button>
-            <dl>
-                <dt>Proficiency Bonus</dt>
-                <dd>2</dd>
-            </dl>
-            <table>
-                <tr>
-                    <th title="strength">STR</th>
-                    <th title="dexterity">DEX</th>
-                    <th title="constitution">CON</th>
-                    <th title="intelligence">INT</th>
-                    <th title="wisdom">WIS</th>
-                    <th title="charisma">CHA</th>
-                </tr>
-                <tr class="standard-array">
-                    <td>{getBonus("str")}</td>
-                    <td>{getBonus("dex")}</td>
-                    <td>{getBonus("con")}</td>
-                    <td>{getBonus("int")}</td>
-                    <td>{getBonus("wis")}</td>
-                    <td>{getBonus("cha")}</td>
-                </tr>
-                <tr>
-                    <th title="modifier" >mod</th>
-                    <th title="modifier" >mod</th>
-                    <th title="modifier" >mod</th>
-                    <th title="modifier" >mod</th>
-                    <th title="modifier" >mod</th>
-                    <th title="modifier" >mod</th>
-                </tr>
-                <tr class="modifiers">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
+            <div class="nog-meer-info-container">
+                <div class="languages">
+                    <div>
 
-            
-        </div>
+                        {languages && languages.length > 0 && (
+                            <>
+                                <h3>Languages</h3>
+                                <ul>
+                                    {languages.map((lang) => (
+                                        <li>
+                                            <a href={`/languages/${lang.index}`}>
+                                                {lang.name}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </>
+                        )}
+                    </div>
+                </div>
 
-        <table>
-            <tr>
-                <th>Armor Class</th>
-                <td class="armor-class"></td>
-            </tr>
-            <tr>
-                <th>Initiative Bonus</th>
-                <td class="initiative"></td>
-            </tr>
-            <tr>
-                <th>Speed</th>
-                <td>{chosenRaceData.speed}</td>
-            </tr>
-        </table>
+                <dl class="stomme-dl">
+                    <div>
+                        <dt>Armor Class</dt>
+                        <dd class="armor-class"></dd>
+                    </div>
+                    <div>
+                        <dt>Initiative Bonus</dt>
+                        <dd class="initiative"></dd>
+                    </div>
+                    <div>
+                        <dt>Speed</dt>
+                        <dd>{chosenRaceData.speed}</dd>
+                    </div>
+                    <div>
+                        <dt>Proficiency Bonus</dt>
+                        <dd>2</dd>
+                    </div>
+                </dl>
+        
+                
+            </div>
 
-        <div>
-            {languages && languages.length > 0 && (
-                <>
-                    <h3>Languages</h3>
-                    <ul>
-                        {languages.map((lang) => (
-                            <li>
-                                <a href={`/languages/${lang.index}`}>
-                                    {lang.name}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </>
-            )}
-        </div>
+            <div class="alignment-container">
+                <div>
+                    <h3>Alignment</h3>
+                    <p>{chosenRaceData.alignment}</p>
+                </div>
+            </div>
 
     </section>
 </div>
@@ -283,7 +299,7 @@ const getBonus = (index) => bonusByIndex.get(index) ?? 0;
     getModifiers();
 
     //insert modifier values
-    const modifierTD = document.querySelectorAll(".modifiers td");
+    const modifierTD = document.querySelectorAll(".modifiers td span");
 
     function insertModifiers() {
     for (let i = 0; i < modifiers.length; i++) {

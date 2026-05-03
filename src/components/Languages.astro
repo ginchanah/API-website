@@ -2,25 +2,31 @@
 const { langData } = Astro.props;
 ---
 
-<div id="langPage">
-    {langData.desc && langData.desc.length > 0 && (
-        <div>
-            <h2>Description</h2>
-            <p>{langData.desc}</p>
-        </div>
-    )}
+<div id="langPage" class="book">
+
+    <div class="page1">
+
+        {langData.desc && langData.desc.length > 0 && (
+            <div>
+                <h2>Description</h2>
+                <p>{langData.desc}</p>
+            </div>
+        )}
+
+        <h2>Type</h2>
+        <p>{langData.type}</p>
+    </div>
+
+    <div class="page2">
+        <h2>Typical speakers</h2>
+        <ul>
+            
+            {langData.typical_speakers.map((speaker) => (
+                    <li>
+                        {speaker}
+                    </li>
+            ))}
+        </ul>
+    </div>
     
-
-    <h2>Type</h2>
-    {langData.type}
-
-    <h2>Typical speakers</h2>
-    <ul>
-        
-        {langData.typical_speakers.map((speaker) => (
-                <li>
-                    {speaker}
-                </li>
-        ))}
-    </ul>
 </div>
