@@ -59,10 +59,49 @@ const getBonus = (index) => bonusByIndex.get(index) ?? 0;
                 </dl>
             </div>
 
-            <div class="ability-score-container">
+            <div class="ability-score-container dl">
+                <h3>Ability Scores</h3>
+                <button class="shuffle-button-2">Shuffle scores</button>
+                <dl>
+                    <div>
+                        <dt>Strength</dt>
+                        <dd class="score">{getBonus("str")}</dd>
+                        <dd class="modifier-cell"><span></span></dd>
+                    </div>
+                    <div>
+                        <dt>Dexterity</dt>
+                        <dd class="score">{getBonus("dex")}</dd>
+                        <dd class="modifier-cell"><span></span></dd>
+                    </div>
+                    <div>
+                        <dt>Constitution</dt>
+                        <dd class="score">{getBonus("con")}</dd>
+                        <dd class="modifier-cell"><span></span></dd>
+                    </div>
+                    <div>
+                        <dt>Intelligence</dt>
+                        <dd class="score">{getBonus("int")}</dd>
+                        <dd class="modifier-cell"><span></span></dd>
+                    </div>
+                    <div>
+                        <dt>Wisdom</dt>
+                        <dd class="score">{getBonus("wis")}</dd>
+                        <dd class="modifier-cell"><span></span></dd>
+                    </div>
+                    <div>
+                        <dt>Charisma</dt>
+                        <dd class="score">{getBonus("cha")}</dd>
+                        <dd class="modifier-cell"><span></span></dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="ability-score-container hide">
                 
                 <h3>Ability Scores</h3>
                 <button class="shuffle-button">Shuffle scores</button>
+
+                
                 
                 <table class="ability-score-table">
                     <tr>
@@ -83,7 +122,7 @@ const getBonus = (index) => bonusByIndex.get(index) ?? 0;
                     </tr>
                     
                     <tr class="modifiers">
-                        <td> <span></span></td>
+                        <td><span></span></td>
                         <td><span></span></td>
                         <td><span></span></td>
                         <td><span></span></td>
@@ -242,7 +281,6 @@ const getBonus = (index) => bonusByIndex.get(index) ?? 0;
 
     // get the first values of the cells upon load that are inserted by the server
     const baseValues = Array.from(standardArrayTD, cell => Number(cell.textContent));
-
     
     // add random standard array numbers into the table
     function insertStandardArray() {

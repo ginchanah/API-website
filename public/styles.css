@@ -434,11 +434,7 @@ form[role="tabpanel"], .book {
 
     .ability-score-container {
       width: 80vw;
-      display: none;
 
-      .ability-score-table {
-        
-      }
     }
 
     .traits-prof-container {
@@ -504,11 +500,68 @@ form[role="tabpanel"], .book {
 /* MARK: Ability Scores
 /* ************* */
 
+/* description list */
 
+.ability-score-container.dl {
+  dl {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-self: center;
+    justify-content: center;
+
+    dt, dd {
+      min-width: 6rem;
+      text-align: center;
+      margin: 0;
+    }
+
+    dt {
+      background-color: var(--sheet-brown);
+      border: 0.1rem solid black;
+      color: white;
+    }
+
+    .score {
+      border: 0.1rem solid black;
+      border-top: none;
+      background-color: white;
+      padding: 0.5rem 0 1rem 0;
+      border-radius: 0 0 2rem 2rem;
+    }
+
+    .modifier-cell {
+      position: relative;
+
+      span {
+        display: inline-block;
+        width: 1.5rem;
+        height: auto;
+        aspect-ratio: 1;
+        border-radius: 99rem;
+        border: 0.1rem solid black;
+        background: white;
+        position: absolute;
+        top: -0.8rem;
+        right: 35%;
+        
+      }
+    }
+  }
+}
+
+/* table */
 .ability-score-container {
   width: 100%;
   display: grid;
   place-items: center;
+
+  @media (width <= 803px) {
+    &.hide {
+      display: none;
+    }
+    
+  }
 
   h3 {
     text-align: center;
@@ -528,6 +581,7 @@ form[role="tabpanel"], .book {
 
   table {
     border-spacing: 0.5rem 0;
+    table-layout: auto;
 
     td, th {
       min-width: 6rem;
