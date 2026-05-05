@@ -496,6 +496,11 @@ form[role="tabpanel"], .book {
 
 }
 
+/* character sheet in PiP */
+body:not(:has(.character-sheet-container)) #character-sheet button {
+  display: none;
+}
+
 /* ************* */
 /* MARK: Ability Scores
 /* ************* */
@@ -771,7 +776,8 @@ form[role="tabpanel"], .book {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 4rem;
+      min-width: 5rem;
+      max-width: 5rem;
       font-size: 0.7rem;
       color: white;
 
@@ -785,6 +791,8 @@ form[role="tabpanel"], .book {
       padding: 0.5rem;
       margin-bottom: 0.3rem;
       width: 80%;
+
+      max-width: 5rem;
       box-sizing: border-box;
       align-self: center;
       justify-self: center;
@@ -857,6 +865,8 @@ form[role="tabpanel"], .book {
 /* ************* */
 /* MARK: custom select
 /* ************* */
+/* https://codepen.io/web-dot-dev/pen/gbOKyRZ?editors=1100 */
+/* https://css-tricks.com/abusing-customizable-selects/ */
 
 :root {
   --selected-race: '🤷';
