@@ -503,6 +503,9 @@ form[role="tabpanel"], .book {
 /* description list */
 
 .ability-score-container.dl {
+  @media (width >= 803px) {
+      display: none;
+  }
   dl {
     display: flex;
     gap: 0.5rem;
@@ -556,8 +559,8 @@ form[role="tabpanel"], .book {
   display: grid;
   place-items: center;
 
-  @media (width <= 803px) {
-    &.hide {
+  @media (width <= 802px) {
+    &.hide table {
       display: none;
     }
     
