@@ -910,8 +910,6 @@ body:not(:has(.character-sheet-container)) #character-sheet button {
       
     }
 
-    
-
     &::picker-icon {
       display: none;
     }
